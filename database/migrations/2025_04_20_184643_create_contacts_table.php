@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->id();
-            $table->string('telephone', 30);
+            $table->uuid('id')->primary();
+            $table->string('telephone', 30)->comment("L'indicatif suivit du numéro");
             $table->string('email', 100)->nullable();
             $table->text('address')->nullable();
-            $table->string('whatsapp', 30)->nullable();
+            $table->string('whatsapp', 30)->nullable()->comment("L'indicatif suivit du numéro");
             $table->timestamps();
         });
     }

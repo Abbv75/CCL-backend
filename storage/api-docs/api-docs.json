@@ -1,0 +1,2474 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SaharaMall API",
+        "description": "SaharaMall Backend API Documentation",
+        "contact": {
+            "name": "YOUNOUSS BORE",
+            "email": "bore.younous59@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "API pour l'ensemble des services de SaharaMall"
+        }
+    ],
+    "paths": {
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Get all roles",
+                "description": "Get all roles",
+                "operationId": "getAllRoles",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "recupérer tous les utilisateurs",
+                "description": "Récupérer tous les utilisateurs avec leur contact et leur rôle",
+                "operationId": "69d62f50b2879e6af2c8289e40341b90",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Créer un utilisateur",
+                "description": "Créer un utilisateur avec son contact et son rôle",
+                "operationId": "dfd784e3a009a1bf8f6faea110e7c8d2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nomComplet",
+                                    "login",
+                                    "password",
+                                    "id_role",
+                                    "telephone"
+                                ],
+                                "properties": {
+                                    "nomComplet": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "id_role": {
+                                        "type": "integer"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilisateur créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "recupérer un utilisateur",
+                "description": "Récupérer un utilisateur avec son contact et son rôle",
+                "operationId": "9d6c4d848dbdbf6f93e96efec661a471",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Mettre à jour un utilisateur",
+                "description": "Mettre à jour un utilisateur avec son contact et son rôle",
+                "operationId": "73540f63680ad625147973ad750fc486",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "nomComplet": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Supprimer un utilisateur",
+                "description": "Supprimer un utilisateur avec son contact",
+                "operationId": "dca00f25b69bed73f4b6a9049a86e247",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur supprimé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Connexion utilisateur",
+                "description": "Connexion d'un utilisateur avec son login et mot de passe",
+                "operationId": "77bce778987dfc377c1d4d9d9158290a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "login",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur connecté avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/type_abonnements": {
+            "get": {
+                "tags": [
+                    "TypeAbonnement"
+                ],
+                "summary": "recuperer tous les types d'abonnements",
+                "description": "Recuperer tous les types d'abonnements",
+                "operationId": "getTypeAbonnements",
+                "responses": {
+                    "200": {
+                        "description": "List of type abonnements",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypeAbonnement"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "TypeAbonnement"
+                ],
+                "summary": "Créer un type d'abonnement",
+                "description": "Créer un type d'abonnement",
+                "operationId": "createTypeAbonnement",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypeAbonnement"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Type abonnement créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypeAbonnement"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/type_abonnements/{id}": {
+            "get": {
+                "tags": [
+                    "TypeAbonnement"
+                ],
+                "summary": "recuperer un type d'abonnement",
+                "description": "Recuperer un type d'abonnement",
+                "operationId": "getTypeAbonnementById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du type d'abonnement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Type abonnement",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypeAbonnement"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "TypeAbonnement"
+                ],
+                "summary": "Mettre à jour un type d'abonnement",
+                "description": "Mettre à jour un type d'abonnement",
+                "operationId": "updateTypeAbonnement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du type d'abonnement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypeAbonnement"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Type abonnement mis à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypeAbonnement"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "TypeAbonnement"
+                ],
+                "summary": "Supprimer un type d'abonnement",
+                "description": "Supprimer un type d'abonnement",
+                "operationId": "deleteTypeAbonnement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du type d'abonnement",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Type abonnement supprimé"
+                    }
+                }
+            }
+        },
+        "/api/boutiques": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Recuperer la liste des boutiques",
+                "description": "Recuperer la liste des boutiques",
+                "operationId": "a06031a1b1b40528c73e9ea3491a1ffb",
+                "responses": {
+                    "200": {
+                        "description": "A list of boutiques",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Boutique"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Créer une nouvelle boutique",
+                "description": "Créer une boutique avec option de lier un utilisateur existant ou d'en créer un nouveau",
+                "operationId": "storeBoutique",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "boutique"
+                                ],
+                                "properties": {
+                                    "boutique": {
+                                        "required": [
+                                            "nom",
+                                            "isPartenaire",
+                                            "telephone"
+                                        ],
+                                        "properties": {
+                                            "nom": {
+                                                "type": "string",
+                                                "example": "Boutique Paris"
+                                            },
+                                            "image": {
+                                                "type": "string",
+                                                "format": "binary"
+                                            },
+                                            "nbrMoisAbonnement": {
+                                                "type": "integer",
+                                                "example": 4
+                                            },
+                                            "isPartenaire": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "typeAbonnement": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "pourcentageProduit": {
+                                                "type": "number",
+                                                "format": "float",
+                                                "example": 15.5
+                                            },
+                                            "telephone": {
+                                                "type": "string",
+                                                "example": "+33612345678"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "contact@boutique.com"
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "example": "123 rue de Paris"
+                                            },
+                                            "whatsapp": {
+                                                "type": "string",
+                                                "example": "+33612345678"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "user": {
+                                        "description": "Données utilisateur si création d'un nouvel utilisateur",
+                                        "properties": {
+                                            "nomComplet": {
+                                                "type": "string",
+                                                "example": "Jean Dupont"
+                                            },
+                                            "login": {
+                                                "type": "string",
+                                                "example": "jeandupont"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "Motdepasse123"
+                                            },
+                                            "telephone": {
+                                                "type": "string",
+                                                "example": "+33698765432"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "jean@example.com"
+                                            },
+                                            "address": {
+                                                "type": "string",
+                                                "example": "456 avenue de Lyon"
+                                            },
+                                            "whatsapp": {
+                                                "type": "string",
+                                                "example": "+33698765432"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "id_user": {
+                                        "description": "ID d'un utilisateur existant si pas de création d'utilisateur",
+                                        "type": "integer",
+                                        "example": 5,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Boutique créée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Boutique"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation échouée"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur serveur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Une erreur est survenue lors de la création de la boutique"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/boutiques/{id}": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Recuperer une boutique",
+                "description": "Recuperer une boutique",
+                "operationId": "c83a34167f5c9945f03de221ce565303",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "La boutique a été récupérée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Boutique"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Mettre à jour une boutique",
+                "description": "Mettre à jour une boutique",
+                "operationId": "438519c35e1f3958d22f32eee6a92ebb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "telephone"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Boutique 1"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "pourcentageProduit": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15.5
+                                    },
+                                    "debutAbonnement": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-04-27T14:00:00Z"
+                                    },
+                                    "finAbonnement": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-10-27T14:00:00Z"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "+123456789"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "bore.younous59@gmail.com"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Rue de la Paix"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string",
+                                        "example": "+123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "La boutique a été mise à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Boutique"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation échouée"
+                    },
+                    "404": {
+                        "description": "Boutique non trouvée"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Supprimer une boutique",
+                "description": "Supprimer une boutique",
+                "operationId": "00747d28aa9223806531ba5872e20f45",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "La boutique a été supprimée avec succès"
+                    }
+                }
+            }
+        },
+        "/api/boutiques/renouvellerAbonnement/{id}": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Renouveler l'abonnement d'une boutique",
+                "description": "Renouveler l'abonnement d'une boutique",
+                "operationId": "7f1d53764314ff249eb3e80252986a29",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nbrMoisAbonnement"
+                                ],
+                                "properties": {
+                                    "nbrMoisAbonnement": {
+                                        "type": "integer",
+                                        "example": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "L'abonnement a été renouvelé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Boutique"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/boutiques/resilierAbonnement/{id}": {
+            "post": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Annuler l'abonnement d'une boutique",
+                "description": "Annuler l'abonnement d'une boutique",
+                "operationId": "4fabf924a74914eb7467397d5ed55088",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'abonnement a été resilier avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Boutique"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/boutiques/image/{image}": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Récupérer l'image d'une boutique",
+                "description": "Récupérer l'image d'une boutique",
+                "operationId": "7591d0927748c616e1931b7d77291685",
+                "parameters": [
+                    {
+                        "name": "image",
+                        "in": "path",
+                        "description": "nom de l'image",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'image a été récupérée avec succès",
+                        "content": {
+                            "image/jpeg": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/boutiques/proprietaire/{id}": {
+            "get": {
+                "tags": [
+                    "Boutique"
+                ],
+                "summary": "Récupérer le propriétaire d'une boutique",
+                "description": "Récupérer le propriétaire d'une boutique",
+                "operationId": "c755bcfa62fa3fab1c6f68475016c79f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la boutique",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Le propriétaire a été récupéré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employer": {
+            "get": {
+                "tags": [
+                    "Employer"
+                ],
+                "summary": "les employers d'une boutiques",
+                "description": "Recuperer les employers d'une boutiques",
+                "operationId": "cd85654585a8f8aaf6dc5910fd4016f5",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Les employers ont été récupérée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Employer"
+                ],
+                "summary": "Créer un employer",
+                "description": "Créer un employer avec son contact et son rôle en fonction d'une boutique",
+                "operationId": "9fbd179b28ef1958113f9d382402e263",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nomComplet",
+                                    "login",
+                                    "password",
+                                    "id_role",
+                                    "telephone"
+                                ],
+                                "properties": {
+                                    "nomComplet": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "id_role": {
+                                        "type": "integer"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employer créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employer/{id}": {
+            "put": {
+                "tags": [
+                    "Employer"
+                ],
+                "summary": "Modifier un employer",
+                "description": "Modifier un employer avec son contact et son rôle en fonction d'une boutique",
+                "operationId": "22dc20bbf4d6aa851aaf2ba037f6c0de",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'employer'",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nomComplet": {
+                                        "type": "string"
+                                    },
+                                    "login": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "id_role": {
+                                        "type": "integer"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employer Modifier avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Employer"
+                ],
+                "summary": "Supprimer un employer",
+                "description": "Supprimer un employer avec son contact",
+                "operationId": "536ea4a6be2652f0b09b0c1cfc3aeb39",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'employer'",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employer Supprimer avec succès"
+                    }
+                }
+            }
+        },
+        "/api/categorie": {
+            "get": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "recuperer tous les categories",
+                "description": "Recuperer tous les types de categorie",
+                "operationId": "getCategorie",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of type categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Categorie"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Créer une categorie",
+                "description": "Créer une categorie",
+                "operationId": "76693c08478ee2dea442981f62f33c47",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categorie cree avec succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Categorie"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categorie/{id}": {
+            "put": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Modifie une categorie",
+                "description": "Modifie une categorie",
+                "operationId": "46659a29376a3b07651af81c218b5638",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categorie",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categorie modifier avec succes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Categorie"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Suppresion dune categorie",
+                "description": "Suppresion dune categorie",
+                "operationId": "8e7ead1c05ac06624e19defd5909c2c8",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categorie supprimé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/produit": {
+            "get": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "recuperer tous les produits",
+                "description": "Recuperer tous les types de produit",
+                "operationId": "getProduit",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of type produits",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Produit"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Créer un produit",
+                "description": "Créer un produit",
+                "operationId": "ab6fb19db48e7b6c08fe603488e218fa",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prixAchat",
+                                    "prixVenteDetails",
+                                    "prixVenteEngros",
+                                    "quantite"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prixAchat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "prixVenteDetails": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "prixVenteEngros": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "quantite": {
+                                        "type": "integer"
+                                    },
+                                    "id_categorie": {
+                                        "type": "integer"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produit créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Produit"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/produit/{id}": {
+            "get": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "recuperer un produit",
+                "description": "Recuperer un produit",
+                "operationId": "8b44f7cd27d12ab253d86cb161c4358e",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Produit récupéré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Produit"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Modifier un produit",
+                "description": "Modifier un produit",
+                "operationId": "feff7ae293aa8b791ba9128f01842bad",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prixAchat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "prixVenteDetails": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "prixVenteEngros": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "quantite": {
+                                        "type": "integer"
+                                    },
+                                    "id_categorie": {
+                                        "type": "integer"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Produit modifié avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Produit"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Supprimer un produit",
+                "description": "Supprimer un produit",
+                "operationId": "13f96b01a711a39641019e5ea9cec893",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Produit supprimé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/produit/image/{name}": {
+            "get": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Recuperer l'image d'un produit",
+                "description": "Recuperer l'image d'un produit",
+                "operationId": "073ab35ec7711c7302b0cd3614735d0f",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "nom de l'image du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "L'image a été récupérée avec succès",
+                        "content": {
+                            "image/jpeg": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/produit/image/{id}": {
+            "post": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Ajoute des images a un produit",
+                "description": "Ajoute des images d'un produit ",
+                "operationId": "b5e1cac7cc649c58d6d06a8b3810c484",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ou code du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "L'image a été ajoutée avec succès"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Produit"
+                ],
+                "summary": "Supprimer une image d'un produit",
+                "description": "Supprimer une image d'un produit ",
+                "operationId": "c7db8e79eed7292afe7f5b104524f4a3",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID ou code du produit",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "L'image a été supprimée avec succès"
+                    }
+                }
+            }
+        },
+        "/api/vente": {
+            "get": {
+                "tags": [
+                    "Vente"
+                ],
+                "summary": "recuperer toutes les ventes",
+                "description": "Recuperer tous les ventes d'une boutique",
+                "operationId": "getAllVente",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List des ventes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Vente"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Ventes"
+                ],
+                "summary": "Créer une nouvelle vente",
+                "description": "Crée une nouvelle vente avec les informations du client et la liste des produits.",
+                "operationId": "977ad6af81fdb281650930165142dae8",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Informations de la vente à créer",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "client",
+                                    "produitsList",
+                                    "is_detail"
+                                ],
+                                "properties": {
+                                    "client": {
+                                        "description": "Informations sur le client",
+                                        "required": [
+                                            "telephone",
+                                            "nomComplet"
+                                        ],
+                                        "properties": {
+                                            "nomComplet": {
+                                                "type": "string",
+                                                "example": "Younouss Bore"
+                                            },
+                                            "telephone": {
+                                                "type": "string",
+                                                "example": "70000001"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "client@example.com"
+                                            },
+                                            "adresse": {
+                                                "type": "string",
+                                                "example": "Bamako, Mali"
+                                            },
+                                            "whatsapp": {
+                                                "type": "string",
+                                                "example": "70000001"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "produitsList": {
+                                        "description": "Liste des produits vendus",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "id",
+                                                "quantite"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID du produit",
+                                                    "type": "integer"
+                                                },
+                                                "quantite": {
+                                                    "description": "Quantité du produit",
+                                                    "type": "integer"
+                                                },
+                                                "montant": {
+                                                    "description": "Prix de vente unitaire (optionnel, sinon calculé automatiquement)",
+                                                    "type": "number",
+                                                    "format": "float"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "is_detail": {
+                                        "description": "Indique si la vente est au détail (true) ou en gros (false). Impacte le calcul du prix si non fourni dans produitsList.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vente créée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Vente"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation des champs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erreur de validation des champs"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Une erreur est survenue lors de la creation de la vente"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vente/{id}": {
+            "get": {
+                "tags": [
+                    "Vente"
+                ],
+                "summary": "recuperer une vente",
+                "description": "Recuperer une ventes d'une boutique avec les produits et le client",
+                "operationId": "getVente",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id de la vente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "la vente avec les produits",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Vente"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Ventes"
+                ],
+                "summary": "Supprimer une vente",
+                "description": "Supprime une vente spécifique en s'assurant qu'elle appartient à la boutique de l'utilisateur.",
+                "operationId": "9d2c624ca4295d56e21f33fef4486c12",
+                "parameters": [
+                    {
+                        "name": "currentboutique",
+                        "in": "header",
+                        "description": "ID ou code de la boutique courante pour vérifier les autorisations.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID numérique de la vente à supprimer.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Opération réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Vente supprimer avec success"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ressource non trouvée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Vente introuvable"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Une erreur est survenue lors de la suppresion de la vente."
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Role": {
+                "title": "Role",
+                "description": "Role model",
+                "required": [
+                    "id",
+                    "nom",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "required": [
+                    "id",
+                    "nomComplet",
+                    "login",
+                    "password",
+                    "telephone",
+                    "id_role"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nomComplet": {
+                        "type": "string"
+                    },
+                    "login": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "adress": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "whatsapp": {
+                        "type": "string"
+                    },
+                    "id_role": {
+                        "type": "integer"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/Role"
+                    },
+                    "contact": {
+                        "$ref": "#/components/schemas/Contact"
+                    }
+                },
+                "type": "object"
+            },
+            "Contact": {
+                "title": "Contact",
+                "description": "Contact model",
+                "required": [
+                    "id",
+                    "telephone"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "whatsapp": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "TypeAbonnement": {
+                "title": "TypeAbonnement",
+                "description": "TypeAbonnement model",
+                "required": [
+                    "id",
+                    "nom",
+                    "prix"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "prix": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "Boutique": {
+                "title": "Boutique",
+                "description": "Boutique model",
+                "required": [
+                    "id",
+                    "nom",
+                    "isPartenaire",
+                    "id_contact",
+                    "id_type_abonnement",
+                    "contact",
+                    "proprietaire"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "debutAbonnement": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finAbonnement": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "isPartenaire": {
+                        "type": "boolean"
+                    },
+                    "pourcentageProduit": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "id_contact": {
+                        "type": "integer"
+                    },
+                    "id_type_abonnement": {
+                        "type": "integer"
+                    },
+                    "contact": {
+                        "$ref": "#/components/schemas/Contact"
+                    },
+                    "type_abonnement": {
+                        "$ref": "#/components/schemas/TypeAbonnement"
+                    },
+                    "proprietaire": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "Categorie": {
+                "title": "Categorie",
+                "description": "Categorie model",
+                "required": [
+                    "id",
+                    "nom",
+                    "id_boutique"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id_boutique": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Produit": {
+                "title": "Produit",
+                "description": "Produit model",
+                "required": [
+                    "id",
+                    "nom",
+                    "prixAchat",
+                    "prixVenteDetails",
+                    "prixVenteEngros",
+                    "quantite",
+                    "id_boutique"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "prixAchat": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "prixVenteDetails": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "prixVenteEngros": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "quantite": {
+                        "type": "integer"
+                    },
+                    "id_boutique": {
+                        "type": "integer"
+                    },
+                    "id_categorie": {
+                        "type": "integer"
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProduitImage"
+                        }
+                    },
+                    "categorie": {
+                        "$ref": "#/components/schemas/Categorie"
+                    }
+                },
+                "type": "object"
+            },
+            "ProduitImage": {
+                "title": "ProduitImage",
+                "description": "ProduitImage model",
+                "required": [
+                    "id",
+                    "image",
+                    "id_produit"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "id_produit": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Client": {
+                "title": "Client",
+                "description": "Client model",
+                "required": [
+                    "id",
+                    "nomComplet",
+                    "id_contact"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nomComplet": {
+                        "type": "string"
+                    },
+                    "id_contact": {
+                        "type": "integer"
+                    },
+                    "contact": {
+                        "$ref": "#/components/schemas/Contact"
+                    }
+                },
+                "type": "object"
+            },
+            "VenteProduit": {
+                "title": "VenteProduit",
+                "description": "VenteProduit model",
+                "required": [
+                    "id",
+                    "id_vente",
+                    "id_produit",
+                    "quantite",
+                    "montant"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "id_vente": {
+                        "type": "integer"
+                    },
+                    "id_produit": {
+                        "type": "integer"
+                    },
+                    "quantite": {
+                        "type": "integer"
+                    },
+                    "montant": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "produit": {
+                        "$ref": "#/components/schemas/Produit"
+                    }
+                },
+                "type": "object"
+            },
+            "Vente": {
+                "title": "Vente",
+                "description": "Vente model",
+                "required": [
+                    "id",
+                    "montant",
+                    "id_boutique",
+                    "id_client"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "montant": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "id_boutique": {
+                        "type": "integer"
+                    },
+                    "id_client": {
+                        "type": "integer"
+                    },
+                    "boutique": {
+                        "$ref": "#/components/schemas/Boutique"
+                    },
+                    "client": {
+                        "$ref": "#/components/schemas/Client"
+                    },
+                    "venteProduits": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VenteProduit"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Roles",
+            "description": "Roles"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        },
+        {
+            "name": "TypeAbonnement",
+            "description": "TypeAbonnement"
+        },
+        {
+            "name": "Boutique",
+            "description": "Boutique"
+        },
+        {
+            "name": "Employer",
+            "description": "Employer"
+        },
+        {
+            "name": "Categorie",
+            "description": "Categorie"
+        },
+        {
+            "name": "Produit",
+            "description": "Produit"
+        },
+        {
+            "name": "Vente",
+            "description": "Vente"
+        },
+        {
+            "name": "Ventes",
+            "description": "Ventes"
+        }
+    ]
+}

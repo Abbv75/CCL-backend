@@ -11,8 +11,8 @@ use OpenApi\Annotations as OA;
  * @OA\OpenApi(
  *     @OA\Info(
  *         version="1.0.0",
- *         title="SaharaMall API",
- *         description="SaharaMall Backend API Documentation",
+ *         title="CCL API",
+ *         description="CCL Backend API Documentation",
  *         @OA\Contact(
  *             email="bore.younous59@gmail.com",
  *             name="YOUNOUSS BORE"
@@ -23,7 +23,7 @@ use OpenApi\Annotations as OA;
  *         )
  *     ),
  *     @OA\Server(
- *         description="API pour l'ensemble des services de SaharaMall",
+ *         description="API pour l'ensemble des services de CCL",
  *         url=L5_SWAGGER_CONST_HOST
  *     )
  * )

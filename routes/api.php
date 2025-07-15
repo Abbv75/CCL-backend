@@ -21,7 +21,7 @@ Route::prefix('user')->group(function () {
     Route::get('me', [UserController::class, 'me']);
 });
 
-Route::prefix('roles')->group(function () {
+Route::prefix('role')->group(function () {
     Route::get('/', [RoleController::class, 'index']);
 });
 

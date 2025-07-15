@@ -12,7 +12,17 @@ class UserController extends Controller
     public function index()
     {
         try {
-            return User::with('contact', 'role', 'boutiques')->get();
+            $users = User::with('role', 'contact')->get();
+            if (!$users) {
+                return response()->json([
+                    'message' => 'Aucun utilisateur trouvé',
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => 'Liste des utilisateurs récupérée avec succès.',
+                'data' => $users,
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Erreur lors de la récupération des utilisateurs',
@@ -34,7 +44,7 @@ class UserController extends Controller
                 );
             }
 
-            return $user->load('contact', 'role', 'boutiques');
+            return $user->load('contact', 'role');
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Erreur lors de la récupération de l\'utilisateur',
@@ -48,11 +58,13 @@ class UserController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'nomComplet' => 'required',
-                'login' => 'required|unique:users',
-                'password' => 'required|string|min:8',
+                'login' => 'required|unique:users,login',
+                'motDePasse' => 'required',
+                'idCOD' => 'nullable|unique:users,idCOD',
                 'id_role' => 'required|exists:roles,id',
                 'telephone' => 'required',
             ]);
+
             if ($validator->fails()) {
                 return response()->json([
                     'message' => 'Erreur de validation des champs',
@@ -75,7 +87,11 @@ class UserController extends Controller
                     'id_contact' => $contact->id
                 ]
             ));
-            return response()->json($user->load('contact', 'role', 'boutiques'), 201);
+
+            return response()->json([
+                'message' => 'Utilisateur créé avec succès.',
+                'data' => $user
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Erreur lors de la création de l\'utilisateur',
@@ -88,8 +104,9 @@ class UserController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'login' => 'nullable|unique:users,login,' . $id,
-                'password' => 'nullable|string|min:8',
+                'login' => "nullable|unique:users,login,$id",
+                'idCOD' => 'nullable|unique:users,idCOD',
+                'id_role' => 'nullable|exists:roles,id',
             ]);
 
             if ($validator->fails()) {
@@ -106,7 +123,7 @@ class UserController extends Controller
                 ], 404);
             }
 
-            Contact::find($user->id_contact)->update($request->only(
+            $user->contact->update($request->only(
                 'telephone',
                 'adress',
                 'email',
@@ -185,6 +202,25 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'Erreur lors de la connexion',
                 'errors' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+     public function me()
+    {
+        try {
+            $user = Auth::user()->load('role', 'contact');
+
+            return response()->json([
+                'message' => 'Profil utilisateur récupéré avec succès.',
+                'data' => $user,
+                'error' => null
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la récupération du profil.',
+                'data' => null,
+                'error' => $e->getMessage()
             ], 500);
         }
     }

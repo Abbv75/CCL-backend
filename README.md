@@ -7,3 +7,9 @@
 - Mise en place des migrations
 - Mise en place des models
 - Mise en place des seeders
+
+### V1.1.1 mise en place des controllers, routers et documentation Swagger
+
+La liste des controller
+
+- `+` User controller

@@ -4,22 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Role extends Model
 {
     use HasFactory;
-    // is uuid
-    protected $uuid = true;
-    protected $uuidString = true;
+    use HasUuids;
     protected $fillable = [
         'name',
         'description',
-    ];
-    protected $table = 'roles';
-    protected $primaryKey = 'id';
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 
     public function users()

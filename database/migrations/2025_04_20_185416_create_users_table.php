@@ -15,12 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary;
             $table->string('nomComplet', 50);
             $table->string('login', 50);
-            $table->string('password', 50);
+            $table->string('motDePasse', 50);
             $table->string('idCOD')->nullable()->comment("Obligatoire si c'est un joureur");
             $table->timestamps();
 
             $table->foreignUuid("id_role")->constrained("roles")->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignUuid("id_contact")->nullable()->constrained("contacts")->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignUuid("id_contact")->constrained("contacts")->restrictOnDelete()->cascadeOnUpdate();
         });
     }
 

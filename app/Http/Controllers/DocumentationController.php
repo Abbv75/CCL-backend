@@ -235,9 +235,9 @@ class DocumentationController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"login", "password"},
+     *             required={"login", "motDePasse"},
      *             @OA\Property(property="login", type="string", example="younouss23"),
-     *             @OA\Property(property="password", type="string", format="password", example="motDePasse123")
+     *             @OA\Property(property="motDePasse", type="string", format="motDePasse", example="motDePasse123")
      *         )
      *     ),
      *     @OA\Response(

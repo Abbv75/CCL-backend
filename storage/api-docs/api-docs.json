@@ -502,6 +502,165 @@
                 }
             }
         },
+        "/api/tournoi/{idTournoi}/participants": {
+            "get": {
+                "tags": [
+                    "Tournois"
+                ],
+                "summary": "Lister les participants d'un tournoi",
+                "description": "Récupérer tous les utilisateurs participant à un tournoi donné",
+                "operationId": "f089cdc5fbd1591fdaf2d46edaf137aa",
+                "parameters": [
+                    {
+                        "name": "idTournoi",
+                        "in": "path",
+                        "description": "ID du tournoi",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des participants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tournoi/{idTournoi}/participants/add": {
+            "post": {
+                "tags": [
+                    "Tournois"
+                ],
+                "summary": "Ajouter des participants à un tournoi",
+                "description": "Ajouter un ou plusieurs participants à un tournoi existant",
+                "operationId": "d9720ec689462c838d7259984e6231ce",
+                "parameters": [
+                    {
+                        "name": "idTournoi",
+                        "in": "path",
+                        "description": "ID du tournoi",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "participants"
+                                ],
+                                "properties": {
+                                    "participants": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Participants ajoutés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tournoi/{idTournoi}/participants/remove": {
+            "post": {
+                "tags": [
+                    "Tournois"
+                ],
+                "summary": "Supprimer des participants d'un tournoi",
+                "description": "Supprimer un ou plusieurs participants d'un tournoi",
+                "operationId": "647819ed998c2c0d4e6aaa7691a3bef5",
+                "parameters": [
+                    {
+                        "name": "idTournoi",
+                        "in": "path",
+                        "description": "ID du tournoi",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "participants"
+                                ],
+                                "properties": {
+                                    "participants": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uuid"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Participants supprimés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tournoi": {
             "get": {
                 "tags": [

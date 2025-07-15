@@ -356,6 +356,92 @@ class DocumentationController extends Controller
 
     /**
      * @OA\Get(
+     *     path="/api/tournoi/{idTournoi}/participants",
+     *     tags={"Tournois"},
+     *     summary="Lister les participants d'un tournoi",
+     *     description="Récupérer tous les utilisateurs participant à un tournoi donné",
+     *     @OA\Parameter(
+     *         name="idTournoi",
+     *         in="path",
+     *         required=true,
+     *         description="ID du tournoi",
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des participants",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         )
+     *     )
+     * )
+     *
+     * @OA\Post(
+     *     path="/api/tournoi/{idTournoi}/participants/add",
+     *     tags={"Tournois"},
+     *     summary="Ajouter des participants à un tournoi",
+     *     description="Ajouter un ou plusieurs participants à un tournoi existant",
+     *     @OA\Parameter(
+     *         name="idTournoi",
+     *         in="path",
+     *         required=true,
+     *         description="ID du tournoi",
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"participants"},
+     *             @OA\Property(
+     *                 property="participants",
+     *                 type="array",
+     *                 @OA\Items(type="string", format="uuid")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Participants ajoutés avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
+     *
+     * @OA\Post(
+     *     path="/api/tournoi/{idTournoi}/participants/remove",
+     *     tags={"Tournois"},
+     *     summary="Supprimer des participants d'un tournoi",
+     *     description="Supprimer un ou plusieurs participants d'un tournoi",
+     *     @OA\Parameter(
+     *         name="idTournoi",
+     *         in="path",
+     *         required=true,
+     *         description="ID du tournoi",
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"participants"},
+     *             @OA\Property(
+     *                 property="participants",
+     *                 type="array",
+     *                 @OA\Items(type="string", format="uuid")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Participants supprimés avec succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string")
+     *         )
+     *     )
+     * )
+     *
+     * @OA\Get(
      *     path="/api/tournoi",
      *     tags={"Tournois"},
      *     summary="Lister tous les tournois",
@@ -573,4 +659,6 @@ class DocumentationController extends Controller
      * )
      */
     public function parties() {}
+
+    
 }

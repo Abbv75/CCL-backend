@@ -2,18 +2,8 @@
 
 ## V1.1 mise en place de la base de donnees
 
-### V1.1.0 mise en de la migration
+### V1.1.0 mise en de la db
 
-Mise en place de la migration de la base de données
-
-### V1.1.1 mise en place des models
-
-Creation des models suivant`:`
-
-- `+` Role
-- `+` Contact
-- `+` User
-- `+` Partie
-- `+` Status
-- `+` Tournoi
-- `+` PartieUser
+- Mise en place des migrations
+- Mise en place des models
+- Mise en place des seeders

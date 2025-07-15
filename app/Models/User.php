@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Model
 {
-    use HasFactory, HasUuids, HasApiTokens;
+    use HasApiTokens, HasFactory;
+
+    protected $table = 'users';
+    public $incrementing = false; // car UUID
+    protected $keyType = 'string';
 
     protected $fillable = [
+        'id',           // UUID
         'nomComplet',
         'login',
         'motDePasse',
@@ -20,9 +23,12 @@ class User extends Model
         'id_role',
         'id_contact',
     ];
-    protected $hidden = [
-        'password',
-    ];
+
+    public function getAuthPassword()
+    {
+        return $this->motDePasse;
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
@@ -31,12 +37,8 @@ class User extends Model
     {
         return $this->belongsTo(Contact::class, 'id_contact');
     }
-    public function partiesGagnees()
-    {
-        return $this->hasMany(Partie::class, 'id_gagnant');
-    }
     public function parties()
     {
-        return $this->belongsToMany(Partie::class, 'partie_user', 'id_user', 'id_partie');
+        return $this->belongsToMany(PartieUser::class, 'partie_users', 'id_user', 'id_partie');
     }
 }

@@ -10,6 +10,6 @@
 
 ### V1.1.1 mise en place des controllers, routers et documentation Swagger
 
-La liste des controller
-
-- `+` User controller
+- Mise en place des controllers
+- Mise en place du router
+- Mise en place de la documentation swagger

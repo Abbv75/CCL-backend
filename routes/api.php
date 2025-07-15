@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TournoiController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,12 @@ Route::prefix('tournoi')->group(function () {
     Route::post('/', [TournoiController::class, 'store']);
     Route::put('{id}', [TournoiController::class, 'update']);
     Route::delete('{id}', [TournoiController::class, 'destroy']);
+});
+
+Route::prefix('status')->group(function () {
+    Route::get('/', [StatusController::class, 'index']);
+    Route::get('{id}', [StatusController::class, 'show']);
+    Route::post('/', [StatusController::class, 'store']);
+    Route::put('{id}', [StatusController::class, 'update']);
+    Route::delete('{id}', [StatusController::class, 'destroy']);
 });

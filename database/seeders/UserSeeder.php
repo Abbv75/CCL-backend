@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('fr_FR');
 
         $contact = Contact::create([
             'id' => (string) Str::uuid(),

@@ -132,8 +132,6 @@ class PartieController extends Controller
                 'date_heure' => 'nullable|date',
                 'id_status' => 'sometimes|required|exists:statuses,id',
                 'id_gagnant' => 'nullable|exists:users,id',
-                'participants' => 'nullable|array',
-                'participants.*' => 'exists:users,id',
             ]);
 
             if ($validator->fails()) {
@@ -160,10 +158,6 @@ class PartieController extends Controller
             }
 
             $partie->update($validator->validated());
-
-            if ($request->has('participants')) {
-                $partie->participants()->sync($request->participants);
-            }
 
             return response()->json([
                 'message' => 'Partie mise à jour avec succès.',
@@ -204,6 +198,74 @@ class PartieController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Erreur lors de la suppression de la partie.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function addParticipants(Request $request, $tournoi_id, $partie_id)
+    {
+        try {
+            $partie = Partie::where('id_tournoi', $tournoi_id)->find($partie_id);
+
+            if (!$partie) {
+                return response()->json([
+                    'message' => 'Partie non trouvé.',
+                ], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'participants' => 'required|array|min:1',
+                'participants.*' => 'exists:users,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Champs invalides pour les participants.',
+                    'error' => $validator->errors()
+                ], 422);
+            }
+
+            $partie->participants()->syncWithoutDetaching($request->participants);
+
+            return response()->json([
+                'message' => 'Participants ajoutés avec succès.',
+                'data' => $partie->load('participants')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de l\'ajout des participants.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function removeParticipants(Request $request, $tournoi_id, $partie_id)
+    {
+        try {
+            $partie = Partie::where('id_tournoi', $tournoi_id)->findOrFail($partie_id);
+
+            $validator = Validator::make($request->all(), [
+                'participants' => 'required|array|min:1',
+                'participants.*' => 'exists:users,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Champs invalides pour les participants.',
+                    'error' => $validator->errors()
+                ], 422);
+            }
+
+            $partie->participants()->detach($request->participants);
+
+            return response()->json([
+                'message' => 'Participants supprimés avec succès.',
+                'data' => $partie->load('participants')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la suppression des participants.',
                 'error' => $e->getMessage()
             ], 500);
         }

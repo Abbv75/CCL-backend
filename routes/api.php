@@ -47,4 +47,6 @@ Route::prefix('tournoi/{tournoi}/partie')->group(function () {
     Route::post('/', [PartieController::class, 'store']);
     Route::put('{id}', [PartieController::class, 'update']);
     Route::delete('{id}', [PartieController::class, 'destroy']);
+    Route::post('participants/add', [PartieController::class, 'addParticipants']);
+    Route::post('participants/remove', [PartieController::class, 'removeParticipants']);
 });

@@ -124,4 +124,88 @@ class PartieController extends Controller
             ], 500);
         }
     }
+
+    public function update(Request $request, $tournoi_id, $id)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'date_heure' => 'nullable|date',
+                'id_status' => 'sometimes|required|exists:statuses,id',
+                'id_gagnant' => 'nullable|exists:users,id',
+                'participants' => 'nullable|array',
+                'participants.*' => 'exists:users,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Champs invalides.',
+                    'error' => $validator->errors()
+                ], 422);
+            }
+
+            $tournoi = Tournoi::find($tournoi_id);
+
+            if (!$tournoi) {
+                return response()->json([
+                    'message' => 'Tournoi non trouvé.',
+                ], 404);
+            }
+
+            $partie = Partie::where('id_tournoi', $tournoi_id)->find($id);
+
+            if (!$partie) {
+                return response()->json([
+                    'message' => 'Tournoi non trouvé.',
+                ], 404);
+            }
+
+            $partie->update($validator->validated());
+
+            if ($request->has('participants')) {
+                $partie->participants()->sync($request->participants);
+            }
+
+            return response()->json([
+                'message' => 'Partie mise à jour avec succès.',
+                'data' => $partie->load('participants')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la mise à jour de la partie.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($tournoi_id, $id)
+    {
+        try {
+            $tournoi = Tournoi::find($tournoi_id);
+
+            if (!$tournoi) {
+                return response()->json([
+                    'message' => 'Tournoi non trouvé.',
+                ], 404);
+            }
+
+            $partie = Partie::where('id_tournoi', $tournoi_id)->find($id);
+
+            if (!$partie) {
+                return response()->json([
+                    'message' => 'Tournoi non trouvé.',
+                ], 404);
+            }
+
+            $partie->delete();
+
+            return response()->json([
+                'message' => 'Partie supprimée avec succès.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la suppression de la partie.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

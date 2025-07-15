@@ -42,9 +42,9 @@ Route::prefix('status')->group(function () {
 });
 
 Route::prefix('tournoi/{tournoi}/partie')->group(function () {
-    Route::get('/', [PartieController::class, 'index']);       // liste parties tournoi
-    Route::get('{id}', [PartieController::class, 'show']);    // détail partie
-    Route::post('/', [PartieController::class, 'store']);     // créer partie dans tournoi
-    Route::put('{id}', [PartieController::class, 'update']);  // modifier partie
-    Route::delete('{id}', [PartieController::class, 'destroy']); // supprimer partie
+    Route::get('/', [PartieController::class, 'index']);
+    Route::get('{id}', [PartieController::class, 'show']);
+    Route::post('/', [PartieController::class, 'store']);
+    Route::put('{id}', [PartieController::class, 'update']);
+    Route::delete('{id}', [PartieController::class, 'destroy']);
 });

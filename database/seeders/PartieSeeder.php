@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Partie;
 use App\Models\Tournoi;
-use App\Models\User;
 use App\Models\PartieUser;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
@@ -16,11 +15,15 @@ class PartieSeeder extends Seeder
     {
         $faker = Faker::create('fr_FR');
 
-        $tournois = Tournoi::all();
-
-        $joueurs = User::where('id_role', 'R01')->pluck('id')->toArray();
+        $tournois = Tournoi::with('participants')->get();
 
         foreach ($tournois as $tournoi) {
+            $participantIds = $tournoi->participants->pluck('id')->toArray();
+
+            if (empty($participantIds)) {
+                continue;
+            }
+
             $nbParties = rand(1, 5);
 
             for ($i = 1; $i <= $nbParties; $i++) {
@@ -28,12 +31,12 @@ class PartieSeeder extends Seeder
                     'id' => (string) Str::uuid(),
                     'dateHeure' => now()->addDays(rand(0, 7)),
                     'id_tournoi' => $tournoi->id,
-                    'id_status' => $faker->randomElement(['S01', 'S02', 'S03']), // en attente, actif, terminé
+                    'id_status' => $faker->randomElement(['S01', 'S02', 'S03']), // adapte à tes status réels
                 ]);
 
-                $participantsIds = $faker->randomElements($joueurs, rand(3, 30));
+                $participants = $faker->randomElements($participantIds, min(rand(3, 30), count($participantIds)));
 
-                foreach ($participantsIds as $participantId) {
+                foreach ($participants as $participantId) {
                     PartieUser::create([
                         'id' => (string) Str::uuid(),
                         'id_partie' => $partie->id,
@@ -41,7 +44,7 @@ class PartieSeeder extends Seeder
                     ]);
                 }
 
-                $partie->id_gagnant = $faker->optional(0.5)->randomElement($participantsIds);
+                $partie->id_gagnant = $faker->optional(0.5)->randomElement($participants);
                 $partie->save();
             }
         }

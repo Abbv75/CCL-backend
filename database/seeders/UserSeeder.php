@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             $contact = Contact::create([
                 'id' => (string) Str::uuid(),
                 'telephone' => $faker->phoneNumber(),
-                'email' => $faker->optional(0.5)->unique()->safeEmail(),
+                'email' => $faker->optional(0.5)->safeEmail(),
                 'adresse' => $faker->optional(0.5)->address(),
                 'whatsapp' => $faker->optional(0.5)->e164PhoneNumber(),
             ]);

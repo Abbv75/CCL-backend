@@ -9,6 +9,6 @@ class PartieUser extends Model
 {
     use HasUuids;
 
-    protected $table = 'partie_user';
+    protected $table = 'partie_users';
     protected $fillable = ['id_partie', 'id_user'];
 }

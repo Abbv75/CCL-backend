@@ -26,6 +26,7 @@ class PartieSeeder extends Seeder
             for ($i = 1; $i <= $nbParties; $i++) {
                 $partie = Partie::create([
                     'id' => (string) Str::uuid(),
+                    'dateHeure' => now()->addDays(rand(0, 7)),
                     'id_tournoi' => $tournoi->id,
                     'id_status' => $faker->randomElement(['S01', 'S02', 'S03']), // en attente, actif, terminé
                 ]);

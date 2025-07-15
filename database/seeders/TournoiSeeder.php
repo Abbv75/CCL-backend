@@ -22,12 +22,11 @@ class TournoiSeeder extends Seeder
             Tournoi::create([
                 'id' => (string) Str::uuid(),
                 'nom' => 'Tournoi ' . ucfirst($faker->word()) . ' ' . now()->addDays($i)->format('F Y'),
-                'description' => $faker->sentence(10),
                 'date_debut' => now()->addDays(rand(1, 60)),
                 'frais_inscription' => $faker->numberBetween(0, 5000),
                 'montant_a_gagner' => $faker->numberBetween(5000, 50000),
-                'nb_max_participants' => $faker->randomElement([50, 100, 150, 200]),
-                'id_status' => $faker->randomElement(Status::inRandomOrder()->first()->id),
+                'nb_max_participants' => $faker->numberBetween(3, 30),
+                'id_status' => Status::inRandomOrder()->first()->id,
             ]);
         }
     }

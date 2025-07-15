@@ -20,7 +20,9 @@ return new class extends Migration
             $table->integer('nb_max_participants')->nullable();
             $table->timestamps();
 
-            $table->foreignUuid('id_status')->constrained('statuses')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('id_status',5);
+            $table->foreign('id_status')->references('id')->on('statuses')->cascadeOnDelete()->cascadeOnUpdate();
+            
         });
     }
 

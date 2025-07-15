@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -15,51 +16,42 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('fr_FR');
 
         $contact = Contact::create([
-            'telephone' => '66035300',
+            'id' => (string) Str::uuid(),
+            'telephone' => $faker->phoneNumber(),
             'email' => 'bore.younous59@gmail.com',
-            'address' => 'Bamako',
-            'whatsapp' => '+22366035300',
+            'adresse' => $faker->optional(0.8)->address(),
+            'whatsapp' => $faker->optional(0.8)->e164PhoneNumber(),
         ]);
 
         User::create([
-            'nomComplet' => 'Bore younouss',
+            'id' => (string) Str::uuid(),
+            'nomComplet' => 'Administrateur Principal',
             'login' => 'admin',
-            'password' => bcrypt(12345678),
-            'id_role' => 1,
+            'motDePasse' => bcrypt('admin123'),
+            'idCOD' => null,
+            'id_role' => 'R02',
             'id_contact' => $contact->id,
         ]);
 
-        $contact = Contact::create([
-            'telephone' => '82641937',
-            'email' => 'bore.younous@outlook.fr',
-            'address' => 'Bamako',
-            'whatsapp' => '+22382641937',
-        ]);
-
-        User::create([
-            'nomComplet' => 'Sounkalo sidibe',
-            'login' => 'sounk',
-            'password' => bcrypt(12345678),
-            'id_role' => 2,
-            'id_contact' => $contact->id,
-        ]);
-
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $contact = Contact::create([
-                'telephone' => $faker->phoneNumber,
-                'email' => rand(0, 1) == 0 ? $faker->unique()->email() : null,
-                'address' => rand(0, 1) == 0 ? $faker->address() : null,
-                'whatsapp' => rand(0, 1) == 0 ? $faker->phoneNumber() : null,
+                'id' => (string) Str::uuid(),
+                'telephone' => $faker->phoneNumber(),
+                'email' => $faker->optional(0.5)->safeEmail(),
+                'adresse' => $faker->optional(0.5)->address(),
+                'whatsapp' => $faker->optional(0.5)->e164PhoneNumber(),
             ]);
 
             User::create([
-                'nomComplet' => $faker->name,
+                'id' => (string) Str::uuid(),
+                'nomComplet' => $faker->name(),
                 'login' => $faker->unique()->userName(),
-                'password' => bcrypt(12345678),
-                'id_role' => rand(2, 3),
+                'motDePasse' => bcrypt('player123'),
+                'idCOD' => strtoupper(Str::random(8)),
+                'id_role' => 'R01',
                 'id_contact' => $contact->id,
             ]);
         }

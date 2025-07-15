@@ -8,18 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    // is uuid
-    protected $uuid = true;
-    protected $uuidString = true;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'name',
         'description',
-    ];
-    protected $table = 'roles';
-    protected $primaryKey = 'id';
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 
     public function users()

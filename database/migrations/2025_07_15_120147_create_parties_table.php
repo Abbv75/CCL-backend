@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('parties', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->dateTime('dateHeure');
+            $table->timestamps();
+            
+            $table->string('id_status',5);
+            $table->foreign('id_status')->references('id')->on('statuses')->cascadeOnDelete()->cascadeOnUpdate();
+            
             $table->foreignUuid('id_tournoi')->constrained('tournois')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignUuid('id_gagnant')->nullable()->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignUuid('id_status')->constrained('statuses')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
         });
     }
 

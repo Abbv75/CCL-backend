@@ -4,29 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Contact extends Model
 {
     use HasFactory;
+    use HasUuids;
     protected $fillable = [
         'telephone',
         'email',
-        'address',
+        'adresse',
         'whatsapp',
     ];
-    protected $table = 'contacts';
-    protected $primaryKey = 'id';
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     public function user()
     {
-        return $this->hasMany(User::class, 'id_contact');
-    }
-    public function boutique()
-    {
-        return $this->hasMany(Boutique::class, 'id_contact');
+        return $this->hasOne(User::class, 'id_contact');
     }
 }

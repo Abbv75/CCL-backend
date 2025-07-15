@@ -47,7 +47,7 @@ class DocumentationController extends Controller
      *     @OA\Property(property="telephone", type="string"),
      *     @OA\Property(property="email", type="string"),
      *     @OA\Property(property="whatsapp", type="string"),
-     *     @OA\Property(property="address", type="string"),
+     *     @OA\Property(property="adresse", type="string"),
      * )
      */
     public function schema() {}
@@ -122,7 +122,7 @@ class DocumentationController extends Controller
      *                 @OA\Property(property="password", type="string"),
      *                 @OA\Property(property="id_role", type="integer"),
      *                 @OA\Property(property="telephone", type="string"),
-     *                 @OA\Property(property="address", type="string"),
+     *                 @OA\Property(property="adresse", type="string"),
      *                 @OA\Property(property="email", type="string"),
      *                 @OA\Property(property="whatsapp", type="string")
      *             )
@@ -156,7 +156,7 @@ class DocumentationController extends Controller
      *                 @OA\Property(property="login", type="string"),
      *                 @OA\Property(property="password", type="string"),
      *                 @OA\Property(property="telephone", type="string"),
-     *                 @OA\Property(property="address", type="string"),
+     *                 @OA\Property(property="adresse", type="string"),
      *                 @OA\Property(property="email", type="string"),
      *                 @OA\Property(property="whatsapp", type="string")
      *             )

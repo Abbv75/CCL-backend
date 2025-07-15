@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('telephone', 30)->comment("L'indicatif suivit du numéro");
             $table->string('email', 100)->nullable();
-            $table->text('address')->nullable();
+            $table->text('adresse')->nullable();
             $table->string('whatsapp', 30)->nullable()->comment("L'indicatif suivit du numéro");
             $table->timestamps();
         });

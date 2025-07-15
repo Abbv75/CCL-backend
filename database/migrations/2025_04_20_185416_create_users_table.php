@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary;
+            $table->uuid('id')->primary();
             $table->string('nomComplet', 50);
             $table->string('login', 50);
-            $table->string('motDePasse', 50);
+            $table->string('motDePasse');
             $table->string('idCOD')->nullable()->comment("Obligatoire si c'est un joureur");
             $table->timestamps();
-
-            $table->foreignUuid("id_role")->constrained("roles")->cascadeOnDelete()->cascadeOnUpdate();
+            
+            $table->string('id_role', 5);
+            $table->foreign('id_role')->references('id')->on('roles')->cascadeOnDelete()->cascadeOnUpdate();
+            
             $table->foreignUuid("id_contact")->constrained("contacts")->restrictOnDelete()->cascadeOnUpdate();
         });
     }

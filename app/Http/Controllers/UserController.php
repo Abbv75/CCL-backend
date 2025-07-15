@@ -6,6 +6,8 @@ use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -72,7 +74,17 @@ class UserController extends Controller
                 ], 422);
             }
 
-            $contact = Contact::create($request->all());
+            $contact = Contact::create(
+                array_merge(
+                    $request->only(
+                        'telephone',
+                        'adress',
+                        'email',
+                        'whatsapp',
+                    ),
+                    ['id' => Str::uuid()],
+                )
+            );
 
             if (!$contact) {
                 return response()->json([
@@ -80,11 +92,13 @@ class UserController extends Controller
                 ], 500);
             }
 
+            $request->put('id_contact', $contact->id);
+
             $user = User::create(array_merge(
-                $request->except('password'),
+                $request->except('password',),
                 [
+                    'id' => Str::uuid(),
                     'password' => bcrypt($request->password),
-                    'id_contact' => $contact->id
                 ]
             ));
 
@@ -176,45 +190,21 @@ class UserController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function me()
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'login' => 'required',
-                'password' => 'required',
-            ]);
-            if ($validator->fails()) {
+            $id = Auth::id();
+            if (!$id) {
                 return response()->json([
-                    'message' => 'Erreur de validation des champs',
-                    'errors' => $validator->errors(),
-                ], 422);
-            }
-            $user = User::where('login', $request->login)->first();
-
-            if (!$user || !password_verify($request->password, $user->password)) {
-                return response()->json([
-                    'message' => 'Identifiants incorrectes',
+                    'message' => 'Utilisateur non authentifié.'
                 ], 401);
             }
 
-            return $user->load('contact', 'role', 'boutiques');
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Erreur lors de la connexion',
-                'errors' => $th->getMessage(),
-            ], 500);
-        }
-    }
-
-     public function me()
-    {
-        try {
-            $user = Auth::user()->load('role', 'contact');
+            $user = User::with('role', 'contact')->find($id);
 
             return response()->json([
                 'message' => 'Profil utilisateur récupéré avec succès.',
-                'data' => $user,
-                'error' => null
+                'data' => $user
             ]);
         } catch (\Exception $e) {
             return response()->json([

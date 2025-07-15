@@ -12,7 +12,7 @@ class TournoiController extends Controller
     public function index()
     {
         try {
-            $tournois = Tournoi::all();
+            $tournois = Tournoi::with('participants')->get();
 
             if (!$tournois) {
                 return response()->json([
@@ -35,7 +35,7 @@ class TournoiController extends Controller
     public function show($id)
     {
         try {
-            $tournoi = Tournoi::findOrFail($id);
+            $tournoi = Tournoi::with('participants')->find($id);
 
             if (!$tournoi) {
                 return response()->json([
@@ -130,7 +130,7 @@ class TournoiController extends Controller
     {
         try {
             $tournoi = Tournoi::find($id);
-            
+
             if (!$tournoi) {
                 return response()->json([
                     'message' => 'Tournoi introuvable'
@@ -146,6 +146,103 @@ class TournoiController extends Controller
             return response()->json([
                 'message' => 'Erreur lors de la suppression du tournoi.',
                 'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function listParticipants($idTournoi)
+    {
+        try {
+            $tournoi = Tournoi::with('participants')->find($idTournoi);
+
+            if (!$tournoi) {
+                return response()->json([
+                    'message' => 'Tournoi introuvable'
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => 'Erreur lors de la récupération des participants',
+                'data' => $tournoi->participants
+            ], 500);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Erreur lors de la récupération des participants',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function addParticipants(Request $request, $idTournoi)
+    {
+        $validator = Validator::make($request->all(), [
+            'participants' => 'required|array|min:1',
+            'participants.*' => 'exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Champs invalides pour les participants.',
+                'error' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            $tournoi = Tournoi::find($idTournoi);
+
+            if (!$tournoi) {
+                return response()->json([
+                    'message' => 'Tournoi introuvable'
+                ], 404);
+            }
+
+            $tournoi->participants()->syncWithoutDetaching($request->participants);
+
+            return response()->json([
+                'message' => 'Participants ajoutés avec succès',
+                'data' => $tournoi->load('participants')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Erreur lors de l\'ajout des participants',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function removeParticipants(Request $request, $idTournoi)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'participants' => 'required|array|min:1',
+                'participants.*' => 'exists:users,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Champs invalides pour les participants.',
+                    'error' => $validator->errors()
+                ], 422);
+            }
+
+            $tournoi = Tournoi::find($idTournoi);
+
+            if (!$tournoi) {
+                return response()->json([
+                    'message' => 'Tournoi introuvable'
+                ], 404);
+            }
+
+            $tournoi->participants()->detach($request->participants);
+
+            return response()->json([
+                'message' => 'Participants supprimés avec succès',
+                'data' => $tournoi->load('participants')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Erreur lors de la suppression des participants',
+                'error' => $th->getMessage()
             ], 500);
         }
     }

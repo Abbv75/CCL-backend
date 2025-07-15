@@ -50,3 +50,9 @@ Route::prefix('tournoi/{tournoi}/partie')->group(function () {
     Route::post('participants/add', [PartieController::class, 'addParticipants']);
     Route::post('participants/remove', [PartieController::class, 'removeParticipants']);
 });
+
+Route::prefix('tournoi/{tournoi}/participants')->group(function () {
+    Route::get('/', [TournoiController::class, 'listParticipants']);
+    Route::post('add', [TournoiController::class, 'addParticipants']);
+    Route::post('remove', [TournoiController::class, 'removeParticipants']);
+});

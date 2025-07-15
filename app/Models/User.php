@@ -39,6 +39,10 @@ class User extends Model
     }
     public function parties()
     {
-        return $this->belongsToMany(PartieUser::class, 'partie_users', 'id_user', 'id_partie');
+        return $this->belongsToMany(Partie::class, 'partie_users', 'id_user', 'id_partie');
+    }
+    public function tournois()
+    {
+        return $this->belongsToMany(Tournoi::class, 'tournoi_users', 'id_user', 'id_tournoi');
     }
 }

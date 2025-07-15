@@ -11,3 +11,9 @@ Mise en place de la migration de la base de données
 Creation des models suivant`:`
 
 - `+` Role
+- `+` Contact
+- `+` User
+- `+` Partie
+- `+` Status
+- `+` Tournoi
+- `+` PartieUser

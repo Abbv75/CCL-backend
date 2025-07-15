@@ -2,50 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /**
-     * Connexion d'un utilisateur.
-     */
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'login' => 'required|string',
-            'motDePasse' => 'required|string',
-        ]);
+        try {
+            $validated = $request->validate([
+                'login' => 'required|string',
+                'motDePasse' => 'required|string',
+            ]);
 
-        // On essaie d'authentifier l'utilisateur avec login et motDePasse
-        if (!Auth::attempt(['login' => $credentials['login'], 'motDePasse' => $credentials['motDePasse']])) {
+            $user = User::where('login', $validated['login'])->first();
+
+            if (!$user || !Hash::check($validated['motDePasse'], $user->motDePasse)) {
+                return response()->json([
+                    'message' => 'Identifiants invalides.'
+                ], 401);
+            }
+
             return response()->json([
-                'message' => 'Identifiants invalides.'
-            ], 401);
+                'message' => 'Connexion réussie.',
+                'data' => $user->load('role', 'contact')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erreur lors de la connexion.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $user = Auth::user();
-
-        // Générer un token Sanctum
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Connexion réussie.',
-            'token' => $token,
-            'user' => $user
-        ]);
-    }
-
-    /**
-     * Déconnexion de l'utilisateur (suppression du token courant).
-     */
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            'message' => 'Déconnexion réussie.'
-        ]);
     }
 }

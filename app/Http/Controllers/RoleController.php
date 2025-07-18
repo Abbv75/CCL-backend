@@ -10,7 +10,10 @@ class RoleController extends Controller
     public function index()
     {
         try {
-            return Role::all();
+            return [
+                'message' => "La liste des utilisateurs",
+                "data" => Role::all()
+            ];
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Erreur lors de la récupération des roles',

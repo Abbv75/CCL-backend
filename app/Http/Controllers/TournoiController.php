@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournoi;
+use App\Models\TournoiUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -196,7 +197,15 @@ class TournoiController extends Controller
                 ], 404);
             }
 
-            $tournoi->participants()->syncWithoutDetaching($request->participants);
+            TournoiUser::insert(
+                array_map(function ($participantId) use ($idTournoi) {
+                    return [
+                        'id' => Str::uuid(),
+                        'id_tournoi' => $idTournoi,
+                        'id_user' => $participantId,
+                    ];
+                }, $request->participants)
+            );
 
             return response()->json([
                 'message' => 'Participants ajoutés avec succès',

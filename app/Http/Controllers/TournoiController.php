@@ -13,7 +13,7 @@ class TournoiController extends Controller
     public function index()
     {
         try {
-            $tournois = Tournoi::with('participants')->get();
+            $tournois = Tournoi::with('participants', 'parties', 'status')->get();
 
             if (!$tournois) {
                 return response()->json([
@@ -36,7 +36,7 @@ class TournoiController extends Controller
     public function show($id)
     {
         try {
-            $tournoi = Tournoi::with('participants')->find($id);
+            $tournoi = Tournoi::with('participants', 'parties', 'status')->find($id);
 
             if (!$tournoi) {
                 return response()->json([
@@ -209,7 +209,7 @@ class TournoiController extends Controller
 
             return response()->json([
                 'message' => 'Participants ajoutés avec succès',
-                'data' => $tournoi->load('participants')
+                'data' => $tournoi->load('participants', 'parties', 'status')
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -246,7 +246,7 @@ class TournoiController extends Controller
 
             return response()->json([
                 'message' => 'Participants supprimés avec succès',
-                'data' => $tournoi->load('participants')
+                'data' => $tournoi->load('participants', 'parties')
             ]);
         } catch (\Throwable $th) {
             return response()->json([

@@ -15,7 +15,8 @@ class Tournoi extends Model
         'frais_inscription',
         'montant_a_gagner',
         'nb_max_participants',
-        'id_status'
+        'id_status',
+        'id_gagnant'
     ];
 
     public function status()
@@ -29,5 +30,9 @@ class Tournoi extends Model
     public function participants()
     {
         return $this->belongsToMany(User::class, 'tournoi_users', 'id_tournoi', 'id_user');
+    }
+    public function gagnant()
+    {
+        return $this->belongsTo(User::class, 'id_gagnant');
     }
 }

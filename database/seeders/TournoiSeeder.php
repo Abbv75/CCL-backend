@@ -18,6 +18,8 @@ class TournoiSeeder extends Seeder
         $joueurs = User::where('id_role', 'R01')->pluck('id')->toArray();
 
         for ($i = 1; $i <= 10; $i++) {
+            $idSatut = Status::inRandomOrder()->first()->id;
+
             $tournoi = Tournoi::create([
                 'id' => (string) Str::uuid(),
                 'nom' => 'Tournoi ' . ucfirst($faker->word()) . ' ' . now()->addDays($i)->format('F Y'),
@@ -25,15 +27,20 @@ class TournoiSeeder extends Seeder
                 'frais_inscription' => $faker->numberBetween(0, 5000),
                 'montant_a_gagner' => $faker->numberBetween(5000, 50000),
                 'nb_max_participants' => $faker->numberBetween(10, 100),
-                'id_status' => Status::inRandomOrder()->first()->id,
+                'id_status' => $idSatut,
             ]);
 
             $participants = $faker->randomElements($joueurs, rand(10, 30));
 
-            foreach ($participants as $participantId) {
+            foreach ($participants as $index => $participantId) {
                 $tournoi->participants()->attach($participantId, [
                     'id' => (string) Str::uuid(),
                 ]);
+
+                if ($index == 0 && $idSatut == 'S03') {
+                    $tournoi->id_gagnant = $participantId;
+                    $tournoi->save();
+                }
             }
         }
     }

@@ -92,13 +92,12 @@ class UserController extends Controller
                 ], 500);
             }
 
-            $request->put('id_contact', $contact->id);
-
             $user = User::create(array_merge(
                 $request->except('password',),
                 [
                     'id' => Str::uuid(),
-                    'password' => bcrypt($request->password),
+                    'motDePasse' => bcrypt($request->motDePasse),
+                    'id_contact' => $contact->id,
                 ]
             ));
 

@@ -24,6 +24,9 @@ class User extends Model
         'id_contact',
     ];
 
+    protected $hidden = [
+        'motDePasse',
+    ];
     public function getAuthPassword()
     {
         return $this->motDePasse;

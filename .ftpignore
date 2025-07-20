@@ -1,0 +1,37 @@
+# Ignorer les fichiers et dossiers de développement
+.git*
+.github/
+node_modules/
+tests/
+storage/debugbar/
+; vendor/
+
+# Ignorer les fichiers d'environnement et configs sensibles
+; *.env
+; .env.*
+; .env
+
+# Ignorer les fichiers de config locale
+*.log
+*.DS_Store
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorer les builds front inutile si tu build localement
+resources/js/
+resources/css/
+resources/sass/
+webpack.mix.js
+package.json
+package-lock.json
+yarn.lock
+
+# Ignorer les fichiers temporaires
+*.bak
+*.tmp
+*.swp
+*.zip
+*.tar
+*.tar.gz

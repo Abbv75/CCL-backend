@@ -103,7 +103,7 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'Utilisateur créé avec succès.',
-                'data' => $user
+                'data' => $user->load('contact', 'role'),
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
@@ -118,7 +118,7 @@ class UserController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'login' => "nullable|unique:users,login,$id",
-                'idCOD' => 'nullable|unique:users,idCOD',
+                'idCOD' => "nullable|unique:users,idCOD,$id",
                 'id_role' => 'nullable|exists:roles,id',
             ]);
 
@@ -144,13 +144,16 @@ class UserController extends Controller
             ));
 
             $user->update(array_merge(
-                $request->except('password'),
+                $request->except('motDePasse'),
                 [
-                    'password' => $request->has('password') ? bcrypt($request->password) : $user->password
+                    'motDePasse' => $request->has('motDePasse') ? bcrypt($request->motDePasse) : $user->motDePasse
                 ]
             ));
 
-            return response()->json($user->load('contact', 'role', 'boutiques'), 200);
+            return [
+                'message' => 'Utilisateur mis à jour avec succès.',
+                'data' => $user->load('contact', 'role'),
+            ];
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Erreur lors de la mise à jour de l\'utilisateur',

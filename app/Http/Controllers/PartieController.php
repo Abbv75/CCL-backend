@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partie;
+use App\Models\PartieUser;
 use App\Models\Tournoi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -115,7 +116,7 @@ class PartieController extends Controller
 
             return response()->json([
                 'message' => 'Partie créée avec succès.',
-                'data' => $partie->load('participants')
+                'data' => $partie->load('status', 'participants', 'gagnant')
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -161,7 +162,7 @@ class PartieController extends Controller
 
             return response()->json([
                 'message' => 'Partie mise à jour avec succès.',
-                'data' => $partie->load('participants')
+                'data' => $partie->load('status', 'participants', 'gagnant')
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -226,11 +227,19 @@ class PartieController extends Controller
                 ], 422);
             }
 
-            $partie->participants()->syncWithoutDetaching($request->participants);
+            PartieUser::insert(
+                array_map(function ($participantId) use ($partie_id) {
+                    return [
+                        'id' => Str::uuid(),
+                        'id_partie' => $partie_id,
+                        'id_user' => $participantId
+                    ];
+                }, $request->participants)
+            );
 
             return response()->json([
                 'message' => 'Participants ajoutés avec succès.',
-                'data' => $partie->load('participants')
+                'data' => $partie->load('status', 'participants', 'gagnant')
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -261,7 +270,7 @@ class PartieController extends Controller
 
             return response()->json([
                 'message' => 'Participants supprimés avec succès.',
-                'data' => $partie->load('participants')
+                'data' => $partie->load('status', 'participants', 'gagnant')
             ]);
         } catch (\Exception $e) {
             return response()->json([

@@ -17,7 +17,7 @@ class TournoiSeeder extends Seeder
 
         $joueurs = User::where('id_role', 'R01')->pluck('id')->toArray();
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             $idSatut = Status::inRandomOrder()->first()->id;
 
             $tournoi = Tournoi::create([

@@ -25,6 +25,6 @@ class Partie extends Model
     }
     public function participants()
     {
-        return $this->belongsToMany(User::class, 'partie_user', 'id_partie', 'id_user');
+        return $this->belongsToMany(User::class, 'partie_users', 'id_partie', 'id_user');
     }
 }

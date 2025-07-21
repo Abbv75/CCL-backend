@@ -19,7 +19,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: / # par ex: /www/ ou /public_html/
+          server-dir: /public_html/ccl/ # par ex: /www/ ou /public_html/
           local-dir: ./ # racine du projet local
           dangerous-clean-slate: false # true supprime tout d'abord, false garde les fichiers existants
 

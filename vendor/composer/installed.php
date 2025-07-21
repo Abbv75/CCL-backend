@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'fef0975bc140a957f0470bd137488de66ae3a387',
+        'reference' => 'fabfb9e347859a1c42dee9171163861651134164',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -466,7 +466,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'fef0975bc140a957f0470bd137488de66ae3a387',
+            'reference' => 'fabfb9e347859a1c42dee9171163861651134164',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -856,8 +856,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0|3.0',
+                0 => '1.0|2.0|3.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
